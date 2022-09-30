@@ -19,4 +19,9 @@ namespace LoopCommandSharp.Models
         public string? NftFactoryCollection { get; set; }
         public string? Exchange { get; set; }
     }
+
+    public class AppSettings
+    {
+        public Settings? Settings { get; set; }
+    }
 }

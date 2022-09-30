@@ -69,9 +69,10 @@
 
 			<TextBlock Grid.Row="8" Grid.Column="0" Text="Exchange Address"/>
 			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Settings.Exchange}"/>
-			<Button Grid.Row="9" Grid.Column="0" Width="150">Save</Button>
-			<Button Grid.Row="9" Grid.Column="1" Width="150">Close</Button>
+			<Button Grid.Row="9" Grid.Column="0" Width="150" Command="{Binding UpdateSettings}">Update</Button>
+			<Button Grid.Row="9" Grid.Column="1" Width="150" Click="Close">Close</Button>
 		</Grid>
+			<TextBlock Text="{Binding Status}"/>
 
 	</StackPanel>
 
