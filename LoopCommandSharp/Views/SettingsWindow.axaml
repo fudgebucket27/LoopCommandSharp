@@ -1,0 +1,80 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:LoopCommandSharp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+		Width="700" Height="400"
+		CanResize="False"
+        x:Class="LoopCommandSharp.Views.SettingsWindow"
+        Title="Settings">
+
+	<Design.DataContext>
+		<vm:SettingsWindowViewModel/>
+	</Design.DataContext>
+
+	<StackPanel>
+		<TextBlock Text="You can export your Loopring API keys and etc from https://loopring.io"/>
+		<Grid ShowGridLines="false">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="Loopring API Key"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Settings.LoopringApiKey}" Width="480" PasswordChar="*"/>
+
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="Loopring Private Key"/>
+			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.LoopringPrivateKey}" Width="480" PasswordChar="*"/>
+
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="Loopring Address"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.LoopringAddress}"/>
+
+			<TextBlock Grid.Row="3" Grid.Column="0" Text="Loopring Account Id"/>
+			<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.LoopringAccountId}"/>
+
+
+			<TextBlock Grid.Row="4" Grid.Column="0" Text="Fee Token Id"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Settings.MaxFeeTokenId}"/>
+
+			<TextBlock Grid.Row="5" Grid.Column="0" Text="Valid Until"/>
+			<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Settings.ValidUntil}"/>
+
+			<TextBlock Grid.Row="6" Grid.Column="0" Text="Factory"/>
+			<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Settings.NftFactory}"/>
+
+			<TextBlock Grid.Row="7" Grid.Column="0" Text="Factory Collection"/>
+			<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Settings.NftFactoryCollection}"/>
+
+			<TextBlock Grid.Row="8" Grid.Column="0" Text="Exchange Address"/>
+			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Settings.Exchange}"/>
+			<Button Grid.Row="9" Grid.Column="0" Width="150">Save</Button>
+			<Button Grid.Row="9" Grid.Column="1" Width="150">Close</Button>
+		</Grid>
+
+	</StackPanel>
+
+
+
+</Window>

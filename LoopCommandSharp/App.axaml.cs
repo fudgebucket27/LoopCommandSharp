@@ -1,13 +1,16 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using LoopCommandSharp.Models;
 using LoopCommandSharp.ViewModels;
 using LoopCommandSharp.Views;
+using Microsoft.Extensions.Configuration;
 
 namespace LoopCommandSharp
 {
     public partial class App : Application
     {
+        public static Settings? settings = null;
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -15,12 +18,27 @@ namespace LoopCommandSharp
 
         public override void OnFrameworkInitializationCompleted()
         {
+            IConfiguration config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
+            settings = config.GetRequiredSection("Settings").Get<Settings>();
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
+                if( string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == 0)
                 {
-                    DataContext = new MainWindowViewModel(),
-                };
+                    desktop.MainWindow= new SettingsWindow()
+                    {
+                        DataContext = new SettingsWindowViewModel(settings),
+                    };
+                }
+                else
+                {
+                    desktop.MainWindow = new MainWindow
+                    {
+                        DataContext = new MainWindowViewModel(),
+                    };
+                }
             }
 
             base.OnFrameworkInitializationCompleted();
