@@ -10,7 +10,6 @@ namespace LoopCommandSharp
 {
     public partial class App : Application
     {
-        public static Settings? settings = null;
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -22,7 +21,7 @@ namespace LoopCommandSharp
             .AddJsonFile("appsettings.json")
             .AddEnvironmentVariables()
             .Build();
-            settings = config.GetRequiredSection("Settings").Get<Settings>();
+            Settings? settings = config.GetRequiredSection("Settings").Get<Settings>();
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 if( string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == 0)
