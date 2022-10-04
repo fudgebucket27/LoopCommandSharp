@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LoopCommandSharp.ViewModels 
@@ -24,6 +25,8 @@ namespace LoopCommandSharp.ViewModels
 
         public bool IsMinting { get; set; } = false;
 
+        public bool IsEnabled { get; set; } = true;
+
         public string Cids { get; set; }
 
         public string log { get; set; }
@@ -34,11 +37,11 @@ namespace LoopCommandSharp.ViewModels
             set
             {
                 log = value;
-                LogPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Log)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Log)));
             }
         }
 
-        public event PropertyChangedEventHandler LogPropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ReactiveCommand<Unit, Unit> MintNft { get; }
 
@@ -64,6 +67,8 @@ namespace LoopCommandSharp.ViewModels
         void Mint()
         {
             Log = "";
+            IsMinting = true;
+            IsEnabled = false;
             if (!string.IsNullOrEmpty(Cids))
             {
                 using (StringReader reader = new StringReader(Cids))
