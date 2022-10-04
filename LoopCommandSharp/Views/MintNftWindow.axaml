@@ -14,7 +14,8 @@
 	</Design.DataContext>
 	
 	<StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
-		<Button Width="100" HorizontalAlignment="Left" Command="{Binding MintNft}">Mint</Button>
+		<Button Width="100" Command="{Binding MintNft}">Mint</Button>
+		<ComboBox SelectedIndex="0" Items="{Binding Collections}"/>
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"></RowDefinition>

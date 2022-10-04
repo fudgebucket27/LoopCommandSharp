@@ -15,6 +15,8 @@ namespace LoopCommandSharp.ViewModels
     {
         public Settings Settings { get; set; }
 
+        public List<string> Collections { get; set; }
+
         public bool IsMinting { get; set; } = false;
 
         public string Cids { get; set; }
@@ -40,26 +42,37 @@ namespace LoopCommandSharp.ViewModels
         public MintNftWindowViewModel(Settings settings)
         {
             Settings = settings;
+            Collections = new List<string>();
+            Collections.Add("BLAH");
+            Collections.Add("Bro");
             MintNft = ReactiveCommand.Create(Mint);
         }
 
         void Mint()
         {
-            using (StringReader reader = new StringReader(Cids))
+            Log = "";
+            if (!string.IsNullOrEmpty(Cids))
             {
-                string line = string.Empty;
-                int count = 1;
-                do
+                using (StringReader reader = new StringReader(Cids))
                 {
-                    line = reader.ReadLine();
-                    if (line != null)
+                    string line = string.Empty;
+                    int count = 1;
+                    do
                     {
-                        Log += $"Minted {count}" + Environment.NewLine;
-                        count++;
-                    }
-                   
+                        line = reader.ReadLine();
+                        if (line != null)
+                        {
+                            Log += $"Minted {count}" + Environment.NewLine;
+                            count++;
+                        }
 
-                } while (line != null);
+
+                    } while (line != null);
+                }
+            }
+            else
+            {
+                Log = "CIDS empty.";
             }
         }
     }
