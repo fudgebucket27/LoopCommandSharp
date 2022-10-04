@@ -15,7 +15,8 @@
 	
 	<StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
 		<Button Width="100" Command="{Binding MintNft}">Mint</Button>
-		<ComboBox SelectedIndex="0" Items="{Binding Collections}"/>
+		<ComboBox Name="MyComboBox" SelectedIndex="0" Items="{Binding Collections}"/>
+
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"></RowDefinition>
@@ -24,7 +25,7 @@
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsMinting}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Width="450"/>
+			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsMinting}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Width="450"/>
 			<TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding Log}" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="500"/>
 		</Grid>
 	</StackPanel>

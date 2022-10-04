@@ -10,4 +10,6 @@ namespace LoopCommandSharp.Views
             InitializeComponent();
         }
     }
+
+
 }

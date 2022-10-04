@@ -1,11 +1,15 @@
-﻿using LoopCommandSharp.Models;
+﻿using Avalonia.Controls;
+using LoopCommandSharp.Models;
+using LoopMintSharp;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,9 +17,10 @@ namespace LoopCommandSharp.ViewModels
 {
     public class MintNftWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        public LoopringService LoopringService { get; set; }
         public Settings Settings { get; set; }
 
-        public List<string> Collections { get; set; }
+        public ObservableCollection<string> Collections { get; set; }
 
         public bool IsMinting { get; set; } = false;
 
@@ -29,23 +34,31 @@ namespace LoopCommandSharp.ViewModels
             set
             {
                 log = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Log)));
+                LogPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Log)));
             }
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler LogPropertyChanged;
 
         public ReactiveCommand<Unit, Unit> MintNft { get; }
 
         public MintNftWindowViewModel(Settings settings)
         {
             Settings = settings;
-            Collections = new List<string>();
-            Collections.Add("BLAH");
-            Collections.Add("Bro");
+            Collections = new ObservableCollection<string>();
+            LoopringService = new LoopringService();
+            RxApp.MainThreadScheduler.Schedule(LoadCollections);
             MintNft = ReactiveCommand.Create(Mint);
+
+        }
+
+        private async void LoadCollections()
+        {
+            var loopringCollections = await LoopringService.FindNftCollection(Settings.LoopringApiKey, 50, 0, Settings.LoopringAddress, "", false);
+            foreach(var collection in loopringCollections.collections)
+            {
+                Collections.Add($"{collection.collection.name},{collection.collection.contractAddress}");
+            }
         }
 
         void Mint()
