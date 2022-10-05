@@ -163,10 +163,16 @@ namespace LoopCommandSharp.ViewModels
                         {
                             CaretIndex = Log.Length;
                             string cid = line.Trim();
+                            if(!cids.StartsWith("Qm") || cid.Length != 46)
+                            {
+                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {cid} is not a valid CID!" + Environment.NewLine;
+                                count++;
+                                continue;
+                            }
                             var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, 2,RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
                             if (!string.IsNullOrEmpty(mintResponse.errorMessage))
                             {
-                                Log += $"Mint {count} out of {lineCount} {RoyaltyPercentage} {EditionsPerMint} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
+                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
                             }
                             else
                             {
