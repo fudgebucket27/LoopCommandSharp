@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using LoopCommandSharp.Models;
 using LoopCommandSharp.ViewModels;
 using Microsoft.Extensions.Configuration;
+using ReactiveUI;
 
 namespace LoopCommandSharp.Views
 {

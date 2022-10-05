@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace LoopCommandSharp.ViewModels
 {
     public class MintNftWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        public Interaction<MintFeeWindowViewModel, MintFeeResultWindowViewModel> ShowDialog { get; }
         public LoopringServices LoopringServices { get; set; }
         public Settings Settings { get; set; }
 
@@ -114,11 +116,11 @@ namespace LoopCommandSharp.ViewModels
         public MintNftWindowViewModel(Settings settings)
         {
             Settings = settings;
+            ShowDialog = new Interaction<MintFeeWindowViewModel, MintFeeResultWindowViewModel>();
             Collections = new ObservableCollection<Collection>();
             LoopringServices = new LoopringServices();
             RxApp.MainThreadScheduler.Schedule(LoadCollections);
             MintNft = ReactiveCommand.Create(Mint);
-
         }
 
         private async void LoadCollections()
@@ -132,11 +134,33 @@ namespace LoopCommandSharp.ViewModels
 
         private async void Mint()
         {
+
             Log = "";
             IsEnabled = false;
             int lineCount = 0;
             if (!string.IsNullOrEmpty(Cids) && SelectedCollection != null)
             {
+                var mintFeeStatus = "";
+                var offChainFee = await LoopringServices.GetMintFee(Settings.LoopringApiKey, Settings.LoopringAccountId, Settings.LoopringAddress, Settings.NftFactoryCollection, false, SelectedCollection.baseUri);
+                var fee = offChainFee.fees[Settings.MaxFeeTokenId].fee;
+                double feeAmount = lineCount * Double.Parse(fee);
+                if (Settings.MaxFeeTokenId == 0)
+                {
+                    mintFeeStatus = $"It will cost around {TokenAmountConverter.ToString(feeAmount, 18)} ETH to mint {lineCount} NFTs";
+                }
+                else if (Settings.MaxFeeTokenId == 1)
+                {
+                    mintFeeStatus  = $"It will cost around {TokenAmountConverter.ToString(feeAmount, 18)} LRC to mint {lineCount} NFTs";
+                }
+                var dialog = new MintFeeWindowViewModel();
+                dialog.MintFeeStatus = mintFeeStatus;
+                var result = await ShowDialog.Handle(dialog);
+                if(result == null || result.ConfirmMintFee == false)
+                {
+                    Log = "Minting cancelled. Mint fee was not confirmed!";
+                    IsEnabled = true;
+                    return;
+                }
                 //Calculate lines
                 using (StringReader reader = new StringReader(Cids))
                 {
@@ -165,7 +189,7 @@ namespace LoopCommandSharp.ViewModels
                             string cid = line.Trim();
                             if(!cids.StartsWith("Qm") || cid.Length != 46)
                             {
-                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {cid} is not a valid CID!" + Environment.NewLine;
+                                Log += $"Mint {count} out of {lineCount}NFTs was UNSUCCESSFUL. ERROR MESSAGE: {cid} is not a valid CID!" + Environment.NewLine;
                                 count++;
                                 continue;
                             }
