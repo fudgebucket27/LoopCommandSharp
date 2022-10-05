@@ -24,17 +24,33 @@ namespace LoopCommandSharp.ViewModels
 
         public ObservableCollection<Collection> Collections { get; set; }
 
-        public bool IsMinting { get; set; } = false;
+        public bool isMinting { get; set; } = false;
 
-        public bool IsEnabled { get; set; } = true;
+        public bool IsMinting
+        {
+            get => isMinting;
+            set
+            {
+                isMinting = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMinting)));
+            }
+        }
+
+        public bool isEnabled { get; set; } = true;
+
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                isEnabled = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
+            }
+        }
 
         public string Cids { get; set; }
 
         public string log { get; set; }
-
-        public int RoyaltyPercentage { get; set; } = 0;
-
-        public int EditionsPerMint { get; set; } = 1;
 
         public string Log
         {
@@ -45,6 +61,12 @@ namespace LoopCommandSharp.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Log)));
             }
         }
+
+        public int RoyaltyPercentage { get; set; } 
+
+        public int EditionsPerMint { get; set; } = 1;
+
+
 
         public Collection selectedCollection { get; set; }
 
@@ -118,11 +140,11 @@ namespace LoopCommandSharp.ViewModels
                             var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, Settings.LoopringAccountId, RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
                             if (!string.IsNullOrEmpty(mintResponse.errorMessage))
                             {
-                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}";
+                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
                             }
                             else
                             {
-                                Log += $"Mint {count} out of {lineCount} NFTs was SUCCESSFUL";
+                                Log += $"Mint {count} out of {lineCount} NFTs was SUCCESSFUL" + Environment.NewLine;
                             }
                             count++;
                         }
@@ -139,6 +161,9 @@ namespace LoopCommandSharp.ViewModels
             {
                 Log = "Choose a collection!";
             }
+
+            IsMinting = false;
+            IsEnabled = true;
         }
     }
 }
