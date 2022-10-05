@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.ReactiveUI;
 using LoopCommandSharp.Models;
 using LoopCommandSharp.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,15 @@ namespace LoopCommandSharp.Views
             .AddEnvironmentVariables()
             .Build();
             settings = config.GetRequiredSection("Settings").Get<Settings>();
+            if(string.IsNullOrEmpty(settings.LoopringApiKey))
+            {
+                var button = this.FindControl<Button>("Mint").IsEnabled = false;
+            }
+            else
+            {
+                var button = this.FindControl<Button>("Mint").IsEnabled = true;
+            }
+            
         }
 
         void ShowMintNftWindow(object sender, RoutedEventArgs e)
@@ -27,15 +37,30 @@ namespace LoopCommandSharp.Views
                 DataContext = new MintNftWindowViewModel(settings)
             };
             window.ShowDialog(this);
+
         }
 
-        void ShowSettingsWindow(object sender, RoutedEventArgs e)
+        private async void ShowSettingsWindow(object sender, RoutedEventArgs e)
         {
             var window = new SettingsWindow()
             {
                 DataContext = new SettingsWindowViewModel(settings)
             };
-            window.ShowDialog(this);
+            var result = await window.ShowDialog<Settings>(this);
+
+            IConfiguration config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
+            settings = config.GetRequiredSection("Settings").Get<Settings>();
+            if (string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == null)
+            {
+                var button = this.FindControl<Button>("Mint").IsEnabled = false;
+            }
+            else
+            {
+                var button = this.FindControl<Button>("Mint").IsEnabled = true;
+            }
         }
     }
 }

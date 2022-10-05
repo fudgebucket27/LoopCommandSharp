@@ -14,7 +14,7 @@
     </Design.DataContext>
 
 	<StackPanel>
-		<Button Width="150" HorizontalAlignment="Center" Click="ShowMintNftWindow">Mint NFT</Button>
+		<Button Name="Mint" Width="150" HorizontalAlignment="Center" Click="ShowMintNftWindow">Mint NFT</Button>
         <Button Width="150" HorizontalAlignment="Center" Click="ShowSettingsWindow">Settings</Button>
 </StackPanel>
 </Window>
