@@ -15,15 +15,9 @@
 	
 	<StackPanel ScrollViewer.VerticalScrollBarVisibility="Visible">
 		<Button Width="100" Command="{Binding MintNft}" IsEnabled="{Binding IsEnabled}">Mint</Button>
-		<ComboBox ToolTip.Tip="Choose a collection" PlaceholderText="Choose a collection..." SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedCollection}">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-						<TextBlock Text="{Binding name}"/>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
 		<Grid>
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 			</Grid.RowDefinitions>
@@ -31,10 +25,18 @@
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-			<TextBlock Grid.Row="0" Grid.Column="0" Text="Royalty Percentage:"/>
-			<TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 0 and 10" Text="{Binding RoyaltyPercentage}" Width="55"/>
-			<TextBlock Grid.Row="1" Grid.Column="0" Text="Editions Per Mint:"/>
-			<TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding EditionsPerMint}" Width="55"/>
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="Collection:"/>
+			<ComboBox Grid.Row="0" Grid.Column="1" ToolTip.Tip="Choose a collection" PlaceholderText="Choose a collection..." SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedCollection}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding name}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="Royalty Percentage:"/>
+			<TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 0 and 10" Text="{Binding RoyaltyPercentage}" Width="55"/>
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="Editions Per Mint:"/>
+			<TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding EditionsPerMint}" Width="55"/>
 		</Grid>
 
 		<Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
