@@ -14,13 +14,7 @@ namespace LoopCommandSharp.Views
 
         private void Close(object sender, RoutedEventArgs e)
         {
-            Hide();
-            var mainWindow = new MainWindow()
-            {
-                DataContext = new MainWindowViewModel()
-            };
-            mainWindow.Show();
-
+            Close();
         }
     }
 }

@@ -21,22 +21,20 @@ namespace LoopCommandSharp.Views
 
         void ShowMintNftWindow(object sender, RoutedEventArgs e)
         {
-            Hide();
             var window = new MintNftWindow()
             {
                 DataContext = new MintNftWindowViewModel(settings)
             };
-            window.Show();
+            window.ShowDialog(this);
         }
 
         void ShowSettingsWindow(object sender, RoutedEventArgs e)
         {
-            Hide();
             var window = new SettingsWindow()
             {
                 DataContext = new SettingsWindowViewModel(settings)
             };
-            window.Show();
+            window.ShowDialog(this);
         }
     }
 }
