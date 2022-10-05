@@ -126,9 +126,12 @@ namespace LoopCommandSharp.ViewModels
         private async void LoadCollections()
         {
             var loopringCollections = await LoopringServices.FindNftCollection(Settings.LoopringApiKey, 50, 0, Settings.LoopringAddress, "", false);
-            foreach(var collection in loopringCollections.collections)
+            if(loopringCollections != null)
             {
-                Collections.Add(collection.collection); 
+                foreach (var collection in loopringCollections.collections)
+                {
+                    Collections.Add(collection.collection);
+                }
             }
         }
 
