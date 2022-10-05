@@ -140,27 +140,7 @@ namespace LoopCommandSharp.ViewModels
             int lineCount = 0;
             if (!string.IsNullOrEmpty(Cids) && SelectedCollection != null)
             {
-                var mintFeeStatus = "";
-                var offChainFee = await LoopringServices.GetMintFee(Settings.LoopringApiKey, Settings.LoopringAccountId, Settings.LoopringAddress, Settings.NftFactoryCollection, false, SelectedCollection.baseUri);
-                var fee = offChainFee.fees[Settings.MaxFeeTokenId].fee;
-                double feeAmount = lineCount * Double.Parse(fee);
-                if (Settings.MaxFeeTokenId == 0)
-                {
-                    mintFeeStatus = $"It will cost around {TokenAmountConverter.ToString(feeAmount, 18)} ETH to mint {lineCount} NFTs";
-                }
-                else if (Settings.MaxFeeTokenId == 1)
-                {
-                    mintFeeStatus  = $"It will cost around {TokenAmountConverter.ToString(feeAmount, 18)} LRC to mint {lineCount} NFTs";
-                }
-                var dialog = new MintFeeWindowViewModel();
-                dialog.MintFeeStatus = mintFeeStatus;
-                var result = await ShowDialog.Handle(dialog);
-                if(result == null || result.ConfirmMintFee == false)
-                {
-                    Log = "Minting cancelled. Mint fee was not confirmed!";
-                    IsEnabled = true;
-                    return;
-                }
+
                 //Calculate lines
                 using (StringReader reader = new StringReader(Cids))
                 {
@@ -173,6 +153,29 @@ namespace LoopCommandSharp.ViewModels
                             lineCount++;
                         }
                     } while (line != null);
+                }
+
+                //Calculate mint fee
+                var mintFeeStatus = "";
+                var offChainFee = await LoopringServices.GetMintFee(Settings.LoopringApiKey, Settings.LoopringAccountId, Settings.LoopringAddress, Settings.NftFactoryCollection, false, SelectedCollection.baseUri);
+                var fee = offChainFee.fees[Settings.MaxFeeTokenId].fee;
+                double feeAmount = lineCount * Double.Parse(fee);
+                if (Settings.MaxFeeTokenId == 0)
+                {
+                    mintFeeStatus = $"It will cost around {TokenAmountConverter.ToString(feeAmount, 18)} ETH to mint {lineCount} NFTs";
+                }
+                else if (Settings.MaxFeeTokenId == 1)
+                {
+                    mintFeeStatus = $"It will cost around {TokenAmountConverter.ToString(feeAmount, 18)} LRC to mint {lineCount} NFTs";
+                }
+                var dialog = new MintFeeWindowViewModel();
+                dialog.MintFeeStatus = mintFeeStatus;
+                var result = await ShowDialog.Handle(dialog);
+                if (result == null || result.ConfirmMintFee == false)
+                {
+                    Log = "Minting cancelled. Mint fee was not confirmed!";
+                    IsEnabled = true;
+                    return;
                 }
 
                 //Loop through cids and mint!
@@ -193,7 +196,7 @@ namespace LoopCommandSharp.ViewModels
                                 count++;
                                 continue;
                             }
-                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, 2,RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
+                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, 0,RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
                             if (!string.IsNullOrEmpty(mintResponse.errorMessage))
                             {
                                 Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
