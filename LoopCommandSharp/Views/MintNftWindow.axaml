@@ -15,7 +15,13 @@
 	
 	<StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
 		<Button Width="100" Command="{Binding MintNft}" IsEnabled="{Binding IsEnabled}">Mint</Button>
-		<ComboBox Name="MyComboBox" SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}"/>
+		<ComboBox Name="MyComboBox" SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedCollection}">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+						<TextBlock Text="{Binding name}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
 
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
