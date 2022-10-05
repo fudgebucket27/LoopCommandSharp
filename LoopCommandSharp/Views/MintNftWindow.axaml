@@ -46,7 +46,7 @@
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEnabled}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Height="300" Width="500"/>
-			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Log}" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="500" CaretIndex="{Binding CaretIndex}"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Log}" Watermark="Mint logs will be output here..." HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="500" CaretIndex="{Binding CaretIndex}"/>
 		</Grid>
 	</StackPanel>
 </Window>
