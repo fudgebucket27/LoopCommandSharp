@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-		Width="1200" Height="500"
+		Width="1000" Height="500"
 		CanResize="False"
         x:Class="LoopCommandSharp.Views.MintNftWindow"
 		xmlns:vm="using:LoopCommandSharp.ViewModels"
@@ -22,8 +22,20 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<TextBox HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 0 and 10" Text="{Binding RoyaltyPercentage}" Width="55"/>
-		<TextBox HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding EditionsPerMint}" Width="55"/>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="Royalty Percentage:"/>
+			<TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 0 and 10" Text="{Binding RoyaltyPercentage}" Width="55"/>
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="Editions Per Mint:"/>
+			<TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding EditionsPerMint}" Width="55"/>
+		</Grid>
 
 		<Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
 			<Grid.RowDefinitions>
@@ -34,7 +46,7 @@
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEnabled}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Height="300" Width="450"/>
-			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Log}" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="600"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Log}" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="500" CaretIndex="{Binding CaretIndex}"/>
 		</Grid>
 	</StackPanel>
 </Window>

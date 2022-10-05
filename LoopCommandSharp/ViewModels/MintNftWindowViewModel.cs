@@ -24,18 +24,6 @@ namespace LoopCommandSharp.ViewModels
 
         public ObservableCollection<Collection> Collections { get; set; }
 
-        public bool isMinting { get; set; } = false;
-
-        public bool IsMinting
-        {
-            get => isMinting;
-            set
-            {
-                isMinting = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMinting)));
-            }
-        }
-
         public bool isEnabled { get; set; } = true;
 
         public bool IsEnabled
@@ -48,9 +36,21 @@ namespace LoopCommandSharp.ViewModels
             }
         }
 
-        public string Cids { get; set; }
+        public string cids { get; set; }
 
-        public string log { get; set; }
+
+        public string Cids
+        {
+            get => cids;
+            set
+            {
+                cids = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cids)));
+            }
+        }
+
+
+    public string log { get; set; }
 
         public string Log
         {
@@ -58,6 +58,8 @@ namespace LoopCommandSharp.ViewModels
             set
             {
                 log = value;
+
+
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Log)));
             }
         }
@@ -65,6 +67,30 @@ namespace LoopCommandSharp.ViewModels
         public int RoyaltyPercentage { get; set; } 
 
         public int EditionsPerMint { get; set; } = 1;
+
+        public int caretIndex { get; set; } = 0;
+        public int CaretIndex
+        {
+            get => caretIndex;
+            set
+            {
+                caretIndex = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CaretIndex)));
+            }
+        }
+
+        public string mintFee { get; set; } = "";
+
+        public string MintFee
+
+        {
+            get => mintFee;
+            set
+            {
+                mintFee = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MintFee)));
+            }
+        }
 
 
 
@@ -107,7 +133,6 @@ namespace LoopCommandSharp.ViewModels
         private async void Mint()
         {
             Log = "";
-            IsMinting = true;
             IsEnabled = false;
             int lineCount = 0;
             if (!string.IsNullOrEmpty(Cids) && SelectedCollection != null)
@@ -136,11 +161,12 @@ namespace LoopCommandSharp.ViewModels
                         line = reader.ReadLine();
                         if (line != null)
                         {
+                            CaretIndex = Log.Length;
                             string cid = line.Trim();
-                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, Settings.LoopringAccountId, RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
+                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, 2,RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
                             if (!string.IsNullOrEmpty(mintResponse.errorMessage))
                             {
-                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
+                                Log += $"Mint {count} out of {lineCount} {RoyaltyPercentage} {EditionsPerMint} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
                             }
                             else
                             {
@@ -161,8 +187,6 @@ namespace LoopCommandSharp.ViewModels
             {
                 Log = "Choose a collection!";
             }
-
-            IsMinting = false;
             IsEnabled = true;
         }
     }
