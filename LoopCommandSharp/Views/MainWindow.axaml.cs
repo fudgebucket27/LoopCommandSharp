@@ -28,5 +28,15 @@ namespace LoopCommandSharp.Views
             };
             window.Show();
         }
+
+        void ShowSettingsWindow(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            var window = new SettingsWindow()
+            {
+                DataContext = new SettingsWindowViewModel(settings)
+            };
+            window.Show();
+        }
     }
 }

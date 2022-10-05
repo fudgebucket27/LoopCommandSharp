@@ -15,5 +15,6 @@
 
 	<StackPanel>
 		<Button Width="150" HorizontalAlignment="Center" Click="ShowMintNftWindow">Mint NFT</Button>
-	</StackPanel>
+        <Button Width="150" HorizontalAlignment="Center" Click="ShowSettingsWindow">Settings</Button>
+</StackPanel>
 </Window>
