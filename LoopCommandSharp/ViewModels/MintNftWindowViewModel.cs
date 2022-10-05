@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Threading;
 using LoopCommandSharp.Models;
 using LoopMintSharp;
 using ReactiveUI;
@@ -30,6 +31,10 @@ namespace LoopCommandSharp.ViewModels
         public string Cids { get; set; }
 
         public string log { get; set; }
+
+        public int RoyaltyPercentage { get; set; } = 0;
+
+        public int EditionsPerMint { get; set; } = 1;
 
         public string Log
         {
@@ -73,17 +78,33 @@ namespace LoopCommandSharp.ViewModels
             var loopringCollections = await LoopringServices.FindNftCollection(Settings.LoopringApiKey, 50, 0, Settings.LoopringAddress, "", false);
             foreach(var collection in loopringCollections.collections)
             {
-                Collections.Add(new Collection() { name = collection.collection.name, contractAddress = collection.collection.contractAddress }); 
+                Collections.Add(collection.collection); 
             }
         }
 
-        void Mint()
+        private async void Mint()
         {
             Log = "";
             IsMinting = true;
             IsEnabled = false;
+            int lineCount = 0;
             if (!string.IsNullOrEmpty(Cids) && SelectedCollection != null)
             {
+                //Calculate lines
+                using (StringReader reader = new StringReader(Cids))
+                {
+                    string line = string.Empty;
+                    do
+                    {
+                        line = reader.ReadLine();
+                        if (line != null)
+                        {
+                            lineCount++;
+                        }
+                    } while (line != null);
+                }
+
+                //Loop through cids and mint!
                 using (StringReader reader = new StringReader(Cids))
                 {
                     string line = string.Empty;
@@ -93,7 +114,16 @@ namespace LoopCommandSharp.ViewModels
                         line = reader.ReadLine();
                         if (line != null)
                         {
-                            Log += $"Minted {count} on {SelectedCollection.contractAddress}" + Environment.NewLine;
+                            string cid = line.Trim();
+                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, Settings.LoopringAccountId, RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
+                            if (!string.IsNullOrEmpty(mintResponse.errorMessage))
+                            {
+                                Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}";
+                            }
+                            else
+                            {
+                                Log += $"Mint {count} out of {lineCount} NFTs was SUCCESSFUL";
+                            }
                             count++;
                         }
 
@@ -101,11 +131,11 @@ namespace LoopCommandSharp.ViewModels
                     } while (line != null);
                 }
             }
-            else if(string.IsNullOrEmpty(Cids))
+            else if (string.IsNullOrEmpty(Cids))
             {
                 Log = "CIDS empty!";
             }
-            else if(SelectedCollection == null)
+            else if (SelectedCollection == null)
             {
                 Log = "Choose a collection!";
             }

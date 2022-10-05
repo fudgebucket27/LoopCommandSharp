@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		Width="1000" Height="500"
+		Width="1200" Height="500"
 		CanResize="False"
         x:Class="LoopCommandSharp.Views.MintNftWindow"
 		xmlns:vm="using:LoopCommandSharp.ViewModels"
@@ -15,24 +15,26 @@
 	
 	<StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
 		<Button Width="100" Command="{Binding MintNft}" IsEnabled="{Binding IsEnabled}">Mint</Button>
-		<ComboBox Name="MyComboBox" SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedCollection}">
+		<ComboBox ToolTip.Tip="Choose a collection" PlaceholderText="Choose a collection..." SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedCollection}">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 						<TextBlock Text="{Binding name}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
+		<TextBox HorizontalAlignment="Left" IsReadOnly="{Binding IsMinting}" ToolTip.Tip="Whole number between 0 and 10" Text="{Binding RoyaltyPercentage}" Width="55"/>
+		<TextBox HorizontalAlignment="Left" IsReadOnly="{Binding IsMinting}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding EditionsPerMint}" Width="55"/>
 
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="300"></RowDefinition>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsMinting}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Width="450"/>
-			<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Log}" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="500"/>
+			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="{Binding IsMinting}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Height="300" Width="450"/>
+			<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Log}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="600"/>
 		</Grid>
 	</StackPanel>
 </Window>
