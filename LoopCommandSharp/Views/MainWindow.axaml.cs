@@ -12,10 +12,10 @@ namespace LoopCommandSharp.Views
         public MainWindow()
         {
             InitializeComponent();
-          IConfiguration config = new ConfigurationBuilder()
-          .AddJsonFile("appsettings.json")
-          .AddEnvironmentVariables()
-          .Build();
+            IConfiguration config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
             settings = config.GetRequiredSection("Settings").Get<Settings>();
         }
 

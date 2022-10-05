@@ -25,11 +25,11 @@ namespace LoopCommandSharp.ViewModels
             set
             {
                 status = value;
-                LogPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
             }
         }
 
-        public event PropertyChangedEventHandler LogPropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ReactiveCommand<Unit, Unit> UpdateSettings { get; }
 
