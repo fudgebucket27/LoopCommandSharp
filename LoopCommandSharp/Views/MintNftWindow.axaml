@@ -13,7 +13,7 @@
 		<vm:MintNftWindowViewModel/>
 	</Design.DataContext>
 	
-	<StackPanel>
+	<StackPanel ScrollViewer.VerticalScrollBarVisibility="Visible">
 		<Button Width="100" Command="{Binding MintNft}" IsEnabled="{Binding IsEnabled}">Mint</Button>
 		<ComboBox ToolTip.Tip="Choose a collection" PlaceholderText="Choose a collection..." SelectedIndex="0" Items="{Binding Collections}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedCollection}">
 			<ComboBox.ItemTemplate>
@@ -25,16 +25,16 @@
 		<TextBox HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 0 and 10" Text="{Binding RoyaltyPercentage}" Width="55"/>
 		<TextBox HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding EditionsPerMint}" Width="55"/>
 
-		<Grid ShowGridLines="True">
+		<Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="300"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 			<TextBox Grid.Row="0" Grid.Column="0" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Visible" IsEnabled="{Binding IsEnabled}" Watermark="Enter IPFS JSON CIDS here per line..." Text="{Binding Cids}" Height="300" Width="450"/>
-			<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Log}"  TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="600"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Log}" HorizontalAlignment="Left" VerticalAlignment="Top" IsReadOnly="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Width="600"/>
 		</Grid>
 	</StackPanel>
 </Window>
