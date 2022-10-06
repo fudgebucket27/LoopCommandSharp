@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="100"
-		Width="200" Height="100"
+		Width="300" Height="100"
+        CanResize="False"
         x:Class="LoopCommandSharp.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="LoopCommandSharp">
@@ -14,7 +15,9 @@
     </Design.DataContext>
 
 	<StackPanel>
-		<Button Name="Mint" Width="150" HorizontalAlignment="Center" Click="ShowMintNftWindow">Mint NFT</Button>
-        <Button Width="150" HorizontalAlignment="Center" Click="ShowSettingsWindow">Settings</Button>
-</StackPanel>
+        <Button Name="CreateCollection" Width="200" HorizontalAlignment="Center" Click="ShowCreateNftCollectionWindow">Create NFT Collection</Button>
+        <Button Name="Mint" Width="200" HorizontalAlignment="Center" Click="ShowMintNftWindow">Mint NFT</Button>
+        <Button Width="200" HorizontalAlignment="Center" Click="ShowSettingsWindow">Settings</Button>
+    </StackPanel>
+
 </Window>

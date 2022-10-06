@@ -30,6 +30,15 @@ namespace LoopCommandSharp.Views
             
         }
 
+        void ShowCreateNftCollectionWindow(object sender, RoutedEventArgs e)
+        {
+            var window = new CreateNftCollectionWindow()
+            {
+                DataContext = new CreateNftCollectionWindowViewModel(settings)
+            };
+            window.ShowDialog(this);
+        }
+
         void ShowMintNftWindow(object sender, RoutedEventArgs e)
         {
             var window = new MintNftWindow()
@@ -39,6 +48,7 @@ namespace LoopCommandSharp.Views
             window.ShowDialog(this);
 
         }
+
 
         private async void ShowSettingsWindow(object sender, RoutedEventArgs e)
         {

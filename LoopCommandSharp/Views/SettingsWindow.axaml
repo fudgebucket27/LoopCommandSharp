@@ -32,14 +32,6 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="Loopring API Key"/>
@@ -69,8 +61,7 @@
 
 			<TextBlock Grid.Row="8" Grid.Column="0" Text="Exchange Address"/>
 			<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Settings.Exchange}"/>
-			<Button Grid.Row="9" Grid.Column="0" Width="150" Command="{Binding UpdateSettings}">Update</Button>
-			<Button Grid.Row="9" Grid.Column="1" Width="150" Click="Close">Close</Button>
+			<Button Grid.Row="9" Grid.Column="0" Width="150" Command="{Binding UpdateSettings}">Save</Button>
 		</Grid>
 			<TextBlock Text="{Binding Status}"/>
 

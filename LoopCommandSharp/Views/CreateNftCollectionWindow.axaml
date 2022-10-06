@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="1000" Height="400"
+		CanResize="false"
+        x:Class="LoopCommandSharp.Views.CreateNftCollectionWindow"
+        Title="CreateNftCollectionWindow">
+	<StackPanel>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Row="0" Grid.Column="0" Text="Collection Name"/>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" IsEnabled="{Binding IsEnabled}" Width="800" Watermark="The name for the collection"/>
+			<TextBlock Grid.Row="1" Grid.Column="0" Text="Collection Description"/>
+			<TextBox Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" IsEnabled="{Binding IsEnabled}" AcceptsReturn="True" Text="{Binding Description}" Width="800" Watermark="The description for the collection" Height="200" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="Collection Avatar"/>
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Avatar}" IsEnabled="{Binding IsEnabled}" Width="800" Watermark="The avatar image link on ipfs or https for the collection"/>
+			<TextBlock Grid.Row="3" Grid.Column="0" Text="Collection Banner"/>
+			<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Banner}" IsEnabled="{Binding IsEnabled}" Width="800" Watermark="The banner image link on ipfs or https for the collection"/>
+			<TextBlock Grid.Row="4" Grid.Column="0" Text="Collection TileUri"/>
+			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TileUri}" IsEnabled="{Binding IsEnabled}" Width="800" Watermark="The tileUri image link on ipfs or https for the collection"/>
+			<Button Grid.Row="5" Grid.Column="0" Command="{Binding CreateNftCollection}">Create collection</Button>
+			<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Status}" TextWrapping="Wrap" IsReadOnly="True" Width="800" Height="50" Watermark="Log output will go here"/>
+		</Grid>
+	</StackPanel>
+</Window>

@@ -185,11 +185,14 @@ namespace LoopMintSharp
                 var data = JsonConvert.DeserializeObject<CreateCollectionResult>(response.Content!);
                 if (!response.IsSuccessful && verboseLogging)
                 {
+               
                     Console.WriteLine($"Error creating nft collection: {response.Content}");
                 }
                 else if (!response.IsSuccessful)
                 {
-                    Console.WriteLine($"Error creating nft collection: {response.Content}");
+                    CreateCollectionResult createCollectionResult = new CreateCollectionResult();
+                    createCollectionResult.contractAddress = response.Content;
+                    data = createCollectionResult;
                 }
                 return data;
             }
