@@ -66,6 +66,8 @@ namespace LoopCommandSharp.ViewModels
             }
         }
 
+        public string RoyaltyAddress { get; set; }
+
         public int RoyaltyPercentage { get; set; } 
 
         public int EditionsPerMint { get; set; } = 1;
@@ -116,6 +118,7 @@ namespace LoopCommandSharp.ViewModels
         public MintNftWindowViewModel(Settings settings)
         {
             Settings = settings;
+            RoyaltyAddress = settings.LoopringAddress;
             ShowDialog = new Interaction<MintFeeWindowViewModel, MintFeeResultWindowViewModel>();
             Collections = new ObservableCollection<Collection>();
             LoopringServices = new LoopringServices();
@@ -141,7 +144,7 @@ namespace LoopCommandSharp.ViewModels
             Log = "";
             IsEnabled = false;
             int lineCount = 0;
-            if (!string.IsNullOrEmpty(Cids) && SelectedCollection != null)
+            if (!string.IsNullOrEmpty(Cids) && !string.IsNullOrEmpty(RoyaltyAddress) && SelectedCollection != null)
             {
 
                 //Calculate lines
@@ -199,7 +202,7 @@ namespace LoopCommandSharp.ViewModels
                                 count++;
                                 continue;
                             }
-                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, 0,RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress);
+                            var mintResponse = await LoopringServices.MintCollection(Settings.LoopringApiKey, Settings.LoopringPrivateKey, Settings.LoopringAddress, Settings.LoopringAccountId, 0,RoyaltyPercentage, EditionsPerMint, Settings.ValidUntil, Settings.MaxFeeTokenId, Settings.NftFactoryCollection, Settings.Exchange, cid, false, SelectedCollection.baseUri, SelectedCollection.contractAddress,RoyaltyAddress);
                             if (!string.IsNullOrEmpty(mintResponse.errorMessage))
                             {
                                 Log += $"Mint {count} out of {lineCount} NFTs was UNSUCCESSFUL. ERROR MESSAGE: {mintResponse.errorMessage}" + Environment.NewLine;
@@ -218,6 +221,10 @@ namespace LoopCommandSharp.ViewModels
             else if (string.IsNullOrEmpty(Cids))
             {
                 Log = "CIDS empty!";
+            }
+            else if (string.IsNullOrEmpty(RoyaltyAddress))
+            {
+                Log = "Royalty Address empty!";
             }
             else if (SelectedCollection == null)
             {
