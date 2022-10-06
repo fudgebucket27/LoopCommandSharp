@@ -19,15 +19,16 @@ namespace LoopCommandSharp.Views
             .AddEnvironmentVariables()
             .Build();
             settings = config.GetRequiredSection("Settings").Get<Settings>();
-            if(string.IsNullOrEmpty(settings.LoopringApiKey))
+            if (string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == 0)
             {
                 var button = this.FindControl<Button>("Mint").IsEnabled = false;
+                var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = false;
             }
             else
             {
                 var button = this.FindControl<Button>("Mint").IsEnabled = true;
+                var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = true;
             }
-            
         }
 
         void ShowCreateNftCollectionWindow(object sender, RoutedEventArgs e)
@@ -63,13 +64,15 @@ namespace LoopCommandSharp.Views
             .AddEnvironmentVariables()
             .Build();
             settings = config.GetRequiredSection("Settings").Get<Settings>();
-            if (string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == null)
+            if (string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == 0)
             {
-                var button = this.FindControl<Button>("Mint").IsEnabled = false;
+                var button = this.FindControl<Button>("Mint").IsEnabled = false; 
+                var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = false;
             }
             else
             {
                 var button = this.FindControl<Button>("Mint").IsEnabled = true;
+                var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = true;
             }
         }
     }
