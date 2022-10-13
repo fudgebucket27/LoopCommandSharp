@@ -11,7 +11,9 @@ mac users may need to run this command in a terminal window in the same folder a
 chmod +x LoopCommandSharp
 ```
 
-You will notice some of the buttons are greyed out initially, you will need to click on the "Settings" button and export out your loopring api keys from loopring.io and etc into window and click on save. Your main window should now look like this:
+You will notice some of the buttons are greyed out initially, you will need to click on the "Settings" button and export out your loopring api keys from loopring.io and etc into this window and click on save. 
+
+Your main window should now look like this:
 
 ![image](https://user-images.githubusercontent.com/5258063/195521543-b6d21a09-2ff1-4b70-b9df-0a0a710aa528.png)
 
