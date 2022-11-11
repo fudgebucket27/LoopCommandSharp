@@ -1,4 +1,5 @@
 ﻿using JsonFlatten;
+using LoopCommandSharp.Models;
 using Multiformats.Hash;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -348,6 +349,11 @@ namespace LoopMintSharp
             }
             return nftMintResponse;
             #endregion
+        }
+
+        public async Task<List<Datum>> GetNFTs(string loopringApiKey, int accountId)
+        {
+            return await loopringService.GetNftBalance(loopringApiKey, accountId);
         }
     }
 }

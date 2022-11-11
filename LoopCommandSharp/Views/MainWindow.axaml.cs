@@ -41,6 +41,16 @@ namespace LoopCommandSharp.Views
 
         }
 
+        void ShowAirdropNftWindow(object sender, RoutedEventArgs e)
+        {
+            var window = new AirdropNftWindow()
+            {
+                DataContext = new AirdropNftWindowViewModel(settings)
+            };
+            window.ShowDialog(this);
+
+        }
+
 
         private async void ShowSettingsWindow(object sender, RoutedEventArgs e)
         {

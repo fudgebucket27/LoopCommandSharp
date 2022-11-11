@@ -62,7 +62,9 @@ namespace LoopCommandSharp.Models
     public class Metadata
     {
         public string uri { get; set; }
-        public Base @base { get; set; }
+
+        [JsonProperty("base")]
+        public Base baseMetadata { get; set; }
         public ImageSize imageSize { get; set; }
         public Extra extra { get; set; }
         public int status { get; set; }

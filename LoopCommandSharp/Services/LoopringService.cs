@@ -242,6 +242,7 @@ namespace LoopMintSharp
             request.AddHeader("X-API-KEY", apiKey);
             request.AddParameter("accountId", accountId);
             request.AddParameter("limit", 50);
+            request.AddParameter("metadata", "true");
             try
             {
                 var offset = 50;
