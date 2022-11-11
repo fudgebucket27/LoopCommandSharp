@@ -17,6 +17,18 @@ namespace LoopCommandSharp.ViewModels
         public LoopringServices LoopringServices { get; set; }
         public Settings Settings { get; set; }
 
+        public string loadingText { get; set; } = "Loading NFTs...";
+
+        public string LoadingText
+        {
+            get => loadingText;
+            set
+            {
+                loadingText = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoadingText)));
+            }
+        }
+
         public bool isEnabled { get; set; } = true;
 
         public bool IsEnabled
@@ -104,6 +116,7 @@ namespace LoopCommandSharp.ViewModels
                     NFTs.Add(nft);
                 }
             }
+            LoadingText = "Choose an NFT...";
         }
     }
 }

@@ -26,10 +26,10 @@
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="NFT:"/>
-			<ComboBox Grid.Row="0" Grid.Column="1" ToolTip.Tip="Choose an NFT" PlaceholderText="Choose an NFT..." SelectedIndex="0" Items="{Binding NFTs}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedNFT}">
+			<ComboBox Grid.Row="0" Grid.Column="1" ToolTip.Tip="Choose an NFT" PlaceholderText="{Binding LoadingText}" SelectedIndex="0" Items="{Binding NFTs}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedNFT}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
-						<TextBlock Text="{Binding metadata.baseMetadata.name}"/>
+						<TextBlock Text="{Binding metadata.baseMetadata.name}{Binding total}"/>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
