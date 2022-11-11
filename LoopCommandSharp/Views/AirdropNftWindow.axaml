@@ -24,15 +24,17 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
 				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 			<TextBlock Grid.Row="0" Grid.Column="0" Text="NFT:"/>
 			<ComboBox Grid.Row="0" Grid.Column="1" ToolTip.Tip="Choose an NFT" PlaceholderText="{Binding LoadingText}" SelectedIndex="0" Items="{Binding NFTs}" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedNFT}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
-						<TextBlock Text="{Binding metadata.baseMetadata.name}{Binding total}"/>
+						<TextBlock Text="{Binding metadata.baseMetadata.name}"/>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
+			<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding SelectedNFT.total, StringFormat='Balance: {0}'}"/>
 			<TextBlock Grid.Row="1" Grid.Column="0" Text="Amount Per Transfer:"/>
 			<TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding IsEnabled}" ToolTip.Tip="Whole number between 1 and 100 000" Text="{Binding TransferAmount}" Width="55"/>
 			<TextBlock Grid.Row="2" Grid.Column="0" Text="Transfer memo:"/>
