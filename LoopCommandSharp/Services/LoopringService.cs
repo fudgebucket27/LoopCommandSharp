@@ -1,4 +1,5 @@
 ﻿using JsonFlatten;
+using LoopCommandSharp.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -20,6 +21,12 @@ namespace LoopMintSharp
         public LoopringService()
         {
             _client = new RestClient(_baseUrl);
+        }
+
+        public void Dispose()
+        {
+            _client?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public async Task<StorageId> GetNextStorageId(string apiKey, int accountId, int sellTokenId, bool verboseLogging)
@@ -160,11 +167,6 @@ namespace LoopMintSharp
             }
         }
 
-        public void Dispose()
-        {
-            _client?.Dispose();
-            GC.SuppressFinalize(this);
-        }
 
         public async Task<CreateCollectionResult> CreateNftCollection(
             string apiKey, 
@@ -229,6 +231,42 @@ namespace LoopMintSharp
                 {
                     Console.WriteLine($"Error finding collection: {httpException.Message}");
                 }
+                return null;
+            }
+        }
+
+        public async Task<List<Datum>> GetNftBalance(string apiKey, int accountId)
+        {
+            var allData = new List<Datum>();
+            var request = new RestRequest("/api/v3/user/nft/balances");
+            request.AddHeader("X-API-KEY", apiKey);
+            request.AddParameter("accountId", accountId);
+            request.AddParameter("limit", 50);
+            try
+            {
+                var offset = 50;
+                var response = await _client.GetAsync(request);
+                var data = JsonConvert.DeserializeObject<NftBalance>(response.Content!);
+                var total = data.totalNum;
+
+                allData.AddRange(data.data);
+                while (total > 50)
+                {
+                    total = total - 50;
+                    request.AddOrUpdateParameter("offset", offset);
+                    response = await _client.GetAsync(request);
+                    var moreData = JsonConvert.DeserializeObject<NftBalance>(response.Content!);
+                    allData.AddRange(moreData.data);
+                    offset = offset + 50;
+                }
+                return allData;
+            }
+            catch (HttpRequestException httpException)
+            {
+                return null;
+            }
+            catch(Exception ex)
+            {
                 return null;
             }
         }

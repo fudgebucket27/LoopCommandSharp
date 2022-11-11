@@ -19,16 +19,7 @@ namespace LoopCommandSharp.Views
             .AddEnvironmentVariables()
             .Build();
             settings = config.GetRequiredSection("Settings").Get<Settings>();
-            if (string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == 0)
-            {
-                var button = this.FindControl<Button>("Mint").IsEnabled = false;
-                var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = false;
-            }
-            else
-            {
-                var button = this.FindControl<Button>("Mint").IsEnabled = true;
-                var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = true;
-            }
+            EnableDisableButtons();
         }
 
         void ShowCreateNftCollectionWindow(object sender, RoutedEventArgs e)
@@ -64,9 +55,14 @@ namespace LoopCommandSharp.Views
             .AddEnvironmentVariables()
             .Build();
             settings = config.GetRequiredSection("Settings").Get<Settings>();
+            EnableDisableButtons();
+        }
+
+        private void EnableDisableButtons()
+        {
             if (string.IsNullOrEmpty(settings.LoopringApiKey) || string.IsNullOrEmpty(settings.LoopringPrivateKey) || string.IsNullOrEmpty(settings.LoopringAddress) || settings.LoopringAccountId == 0)
             {
-                var button = this.FindControl<Button>("Mint").IsEnabled = false; 
+                var button = this.FindControl<Button>("Mint").IsEnabled = false;
                 var button2 = this.FindControl<Button>("CreateCollection").IsEnabled = false;
             }
             else

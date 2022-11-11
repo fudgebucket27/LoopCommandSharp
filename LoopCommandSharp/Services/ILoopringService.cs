@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoopCommandSharp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,5 +48,9 @@ namespace LoopMintSharp
              string tokenAddress,
              bool verboseLogging);
 
+        Task<List<Datum>> GetNftBalance(
+            string apiKey,
+            int accountId
+            );
     }
 }
